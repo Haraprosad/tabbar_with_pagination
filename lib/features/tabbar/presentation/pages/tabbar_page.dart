@@ -11,10 +11,11 @@ class _TabbarPageState extends State<TabbarPage> with TickerProviderStateMixin{
   @override
   void dispose() {
     super.dispose();
+    _tabController.dispose();
   }
+  late final _tabController = TabController(length: 3, vsync: this);
   @override
   Widget build(BuildContext context) {
-     final _tabController = TabController(length: 3, vsync: this);
     return Scaffold(
       appBar: AppBar(title: const Text("TabBar View"),),
       body: SafeArea(
@@ -42,16 +43,28 @@ class _TabbarPageState extends State<TabbarPage> with TickerProviderStateMixin{
                 ),
               ),
             ),
-            Container(
-              height: 400,
-              width: double.maxFinite,
-              child:  TabBarView(
-                controller: _tabController,
-                children: const [
-                  Center(child: Text("Tab 1 Data")),
-                  Center(child: Text("Tab 2 Data")),
-                  Center(child: Text("Tab 3 Data")),
-                ],
+            Expanded(
+              child: SizedBox(
+                // height: 400,
+                width: double.maxFinite,
+                child:  TabBarView(
+                  controller: _tabController,
+                  children:  [
+                    SingleChildScrollView(
+                      child: Container(
+                        height: 800,
+                          color: Colors.blue,
+                          child: const Center(child: Text("Tab 1 Data"))),
+                    ),
+                    SingleChildScrollView(
+                      child: Container(
+                        height: 1500,
+                          color: Colors.blueGrey,
+                          child: const Center(child: Text("Tab 2 Data"))),
+                    ),
+                    const Center(child: Text("Tab 3 Data")),
+                  ],
+                ),
               ),
             ),
           ],
